@@ -19,9 +19,9 @@ var each = require('dir-each')
 
   - [each()](#each)
 
-## each()
+### each(dir:String, fn:Function)
 
-  iterate over each file in `dir`
+  iterate over each file in `dir` and apply `fn`
 
 ```js
 var files = 0
