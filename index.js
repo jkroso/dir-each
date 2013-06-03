@@ -6,7 +6,7 @@ var each = require('foreach/async/promise')
   , stat = promisify(fs.stat)
   , join = require('path').join
 
-module.exports = each
+module.exports = walk
 
 /**
  * iterate over each file in `dir`
@@ -16,13 +16,13 @@ module.exports = each
  * @return {Promise} null
  */
 
-function each(dir, fn){
+function walk(dir, fn){
 	return readDir(dir).then(function(names){
 		return each(names, function(name){
 			var path = join(dir, name)
 			return stat(path).then(function(stat){
 				if (stat.isFile()) return fn(path)
-				if (stat.isDirectory()) return each(path, fn)
+				if (stat.isDirectory()) return walk(path, fn)
 			})
 		})
 	})
