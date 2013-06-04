@@ -1,6 +1,6 @@
 {
   "name": "dir-each",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "higher order functions for iterating over files",
   "keywords": [
     "each",
@@ -14,8 +14,8 @@
     "url": "git://github.com/jkroso/dir-each.git"
   },
   "dependencies": {
-    "promisify": "http://github.com/jkroso/promisify/tarball/0.2.1",
-    "forEach": "http://github.com/jkroso/forEach/tarball/0.5.2"
+    "promisify": "http://github.com/jkroso/promisify/tarball/0.2.2",
+    "forEach": "http://github.com/jkroso/forEach/tarball/0.5.3"
   },
   "devDependencies": {
     "mocha": "*",
