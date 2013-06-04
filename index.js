@@ -3,7 +3,7 @@ var each = require('foreach/async/promise')
   , promisify = require('promisify')
   , fs = require('fs')
   , readDir = promisify(fs.readdir)
-  , stat = promisify(fs.stat)
+  , stat = promisify(fs.lstat)
   , join = require('path').join
 
 module.exports = walk
