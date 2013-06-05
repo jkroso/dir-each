@@ -1,10 +1,9 @@
 
-var each = require('foreach/async/promise')
-  , promisify = require('promisify')
-  , fs = require('fs')
-  , readDir = promisify(fs.readdir)
-  , stat = promisify(fs.lstat)
+var each = require('foreach/async')
+  , fs = require('promisify/fs')
   , join = require('path').join
+  , kids = fs.readdir
+  , stat = fs.lstat
 
 module.exports = walk
 
@@ -17,7 +16,7 @@ module.exports = walk
  */
 
 function walk(dir, fn){
-	return readDir(dir).then(function(names){
+	return kids(dir).then(function(names){
 		return each(names, function(name){
 			var path = join(dir, name)
 			return stat(path).then(function(stat){
