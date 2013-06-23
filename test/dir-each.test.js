@@ -1,18 +1,8 @@
 
 var chai = require('./chai')
+  , Result = require('result')
   , each = require('..')
   , fs = require('fs')
-
-var pending = 0
-function DummyPromise(){
-	pending++
-}
-DummyPromise.prototype.then = function(onValue, onError){
-	setTimeout(function(){
-		--pending
-		onValue()
-	})
-}
 
 describe('dir-each', function(){
 	it('should enumerate all files', function(done){
@@ -29,13 +19,20 @@ describe('dir-each', function(){
 		})
 	})
 
-	it('should wait on promises before fulfilling', function (done) {
+	it('should wait on results before fulfilling', function(done){
+		var results = []
 		each(__dirname+'/fixtures', function(path){
-			return new DummyPromise
-		}).read(function(){
-			pending.should.equal(0)
-			done()
-		})
+			var result = new Result
+			results.push(result)
+			setTimeout(function(){
+				result.write()
+			}, 0)
+			return result
+		}).then(function(){
+			results.forEach(function(res){
+				res.state.should.eql('done')
+			})
+		}).node(done)
 	})
 
 	it('should ignore symlinks', function(done){
