@@ -3,7 +3,7 @@
 
   higher order functions for iterating over files
 
-## Getting Started
+## Installation
 
 _With npm_  
 
@@ -21,7 +21,7 @@ var each = require('dir-each')
 
 ### each(dir:String, fn:Function)
 
-  iterate over each file in `dir` and apply `fn`
+  iterate over each file in `dir` and apply `fn`. `each` fully understands the semantics of [Results](//github.com/jkroso/result) so you can pass them as arguments and return them from `fn` with the desired effect.
 
 ```js
 var files = 0
