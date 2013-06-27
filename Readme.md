@@ -13,11 +13,15 @@ then in your app:
 
 ```js
 var each = require('dir-each')
+var series = require('dir-each/series')
 ```
 
 ## API
 
   - [each()](#each)
+  - [series()](#series)
+
+both functions also come in variations which include symlinked files. To access them use `fn.withSyms`
 
 ### each(dir:String, fn:Function)
 
@@ -32,6 +36,10 @@ each(process.env.HOME, function(path){
   console.log('you own %d files', files)
 })
 ```
+
+### series(dir:String, fn:Function)
+
+  as above but waits on results between iterations
 
 ## Running the tests
 
