@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "foreach": "http://github.com/jkroso/forEach/tarball/0.8.4",
-    "when": "http://github.com/jkroso/when/tarball/3.2.3",
+    "when": "http://github.com/jkroso/when/tarball/3.2.4",
     "resultify": "0.2.4"
   },
   "devDependencies": {

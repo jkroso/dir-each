@@ -6,6 +6,35 @@ var chai = require('./chai')
   , fs = require('fs')
 
 describe('dir-each', function(){
+	commonProperties(each)
+})
+
+describe('series', function(){
+	commonProperties(series)
+
+	it('should enumerate one after the other', function(done){
+		var files = []
+		series(__dirname + '/fixtures', function(path){
+			if (files.length) {
+				files[files.length - 1].state.should.equal('done')
+			}
+			var result = new Result
+			files.push(result)
+			setTimeout(function(){
+				result.write(path)
+			}, Math.random() * 10)
+			return result
+		}).then(function(){
+			files.should.have.a.lengthOf(5)
+			var i = 0
+			return series(__dirname + '/fixtures', function(path){
+				path.should.equal(files[i++].value)
+			})
+		}).node(done)
+	})
+})
+
+function commonProperties(){
 	it('should enumerate all files', function(done){
 		var paths = []
 		each(__dirname+'/fixtures/dir', function(path){
@@ -34,7 +63,7 @@ describe('dir-each', function(){
 			})
 		}).node(done)
 	})
-
+	
 	it('should ignore symlinks', function(done){
 		var paths = []
 		each(__dirname+'/fixtures', function(path){
@@ -49,27 +78,22 @@ describe('dir-each', function(){
 			)
 		}).node(done)
 	})
-})
 
-describe('series', function(){
-	it('should enumerate one after the other', function(done){
-		var files = []
-		series(__dirname + '/fixtures', function(path){
-			if (files.length) {
-				files[files.length - 1].state.should.equal('done')
-			}
-			var result = new Result
-			files.push(result)
-			setTimeout(function(){
-				result.write(path)
-			}, Math.random() * 10)
-			return result
-		}).then(function(){
-			files.should.have.a.lengthOf(5)
-			var i = 0
-			return series(__dirname + '/fixtures', function(path){
-				path.should.equal(files[i++].value)
-			})
-		}).node(done)
+	describe('syms', function(){
+		it('should follow symlinks', function(done){
+			var paths = []
+			each.withSyms(__dirname+'/fixtures', function(path){
+				paths.push(path)
+			}).then(function(){
+				paths.should.have.a.lengthOf(6).and.include(
+					__dirname+'/fixtures/.dotfile',
+					__dirname+'/fixtures/target/file',
+					__dirname+'/fixtures/1.js',
+					__dirname+'/fixtures/2.js',
+					__dirname+'/fixtures/dir/1',
+					__dirname+'/fixtures/dir/2/3.file'
+				)
+			}).node(done)
+		})
 	})
-})
+}
