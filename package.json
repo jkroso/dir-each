@@ -1,6 +1,6 @@
 {
   "name": "dir-each",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "higher order functions for iterating over files",
   "keywords": [
     "each",
@@ -15,13 +15,13 @@
   },
   "dependencies": {
     "foreach": "http://github.com/jkroso/forEach/tarball/0.8.4",
-    "when": "http://github.com/jkroso/when/tarball/3.2.1",
-    "resultify": "0.2.3"
+    "when": "http://github.com/jkroso/when/tarball/3.2.3",
+    "resultify": "0.2.4"
   },
   "devDependencies": {
     "mocha": "1.11.0",
     "chai": "1.7.0",
-    "result": "0.3.0"
+    "result": "0.3.1"
   },
   "scripts": {
     "install": "npm dedupe"

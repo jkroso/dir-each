@@ -1,6 +1,7 @@
 
 var chai = require('./chai')
   , Result = require('result')
+  , series = require('../series')
   , each = require('..')
   , fs = require('fs')
 
@@ -10,13 +11,12 @@ describe('dir-each', function(){
 		each(__dirname+'/fixtures/dir', function(path){
 			fs.statSync(path).isFile().should.be.true
 			paths.push(path)
-		}).read(function(){
+		}).then(function(){
 			paths.should.have.a.lengthOf(2).and.include(
 				__dirname+'/fixtures/dir/1',
 				__dirname+'/fixtures/dir/2/3.file'
 			)
-			done()
-		})
+		}).node(done)
 	})
 
 	it('should wait on results before fulfilling', function(done){
@@ -39,7 +39,7 @@ describe('dir-each', function(){
 		var paths = []
 		each(__dirname+'/fixtures', function(path){
 			paths.push(path)
-		}).read(function(){
+		}).then(function(){
 			paths.should.have.a.lengthOf(5).and.include(
 				__dirname+'/fixtures/.dotfile',
 				__dirname+'/fixtures/1.js',
@@ -47,7 +47,29 @@ describe('dir-each', function(){
 				__dirname+'/fixtures/dir/1',
 				__dirname+'/fixtures/dir/2/3.file'
 			)
-			done()
-		})
+		}).node(done)
+	})
+})
+
+describe('series', function(){
+	it('should enumerate one after the other', function(done){
+		var files = []
+		series(__dirname + '/fixtures', function(path){
+			if (files.length) {
+				files[files.length - 1].state.should.equal('done')
+			}
+			var result = new Result
+			files.push(result)
+			setTimeout(function(){
+				result.write(path)
+			}, Math.random() * 10)
+			return result
+		}).then(function(){
+			files.should.have.a.lengthOf(5)
+			var i = 0
+			return series(__dirname + '/fixtures', function(path){
+				path.should.equal(files[i++].value)
+			})
+		}).node(done)
 	})
 })
