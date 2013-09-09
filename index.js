@@ -1,11 +1,11 @@
 
+var walker = require('./src/walker')
 var each = require('foreach/async')
-  , walker = require('./src/walker')
-  , fs = require('resultify/fs')
+var fs = require('lift-result/fs')
 
 /**
  * iterate over each file in `dir`
- * 
+ *
  * @param {String} dir
  * @param {Function} fn
  * @return {Result}

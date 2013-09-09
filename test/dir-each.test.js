@@ -1,9 +1,9 @@
 
+var series = require('../series')
+var Result = require('result')
 var chai = require('./chai')
-  , Result = require('result')
-  , series = require('../series')
-  , each = require('..')
-  , fs = require('fs')
+var each = require('..')
+var fs = require('fs')
 
 describe('dir-each', function(){
 	commonProperties(each)
