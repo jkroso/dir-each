@@ -1,26 +1,18 @@
 {
   "name": "dir-each",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "description": "higher order function for iterating over files",
   "dependencies": {
-    "foreach": "http://github.com/jkroso/forEach/tarball/0.8.7",
+    "foreach": "jkroso/forEach#0.8.8",
+    "lift-result": "~0.1.3",
     "result-type": "1.0.0",
-    "lift-result": "0.1.1",
-    "result": "0.4.2"
+    "result": "~0.4.4"
   },
   "devDependencies": {
-    "mocha": "1.12.1",
-    "chai": "1.7.2"
+    "mocha": "*",
+    "chai": "*"
   },
-  "keywords": [
-    "each",
-    "walk",
-    "file",
-    "iterate"
-  ],
+  "keywords": ["each", "walk", "file", "iterate"],
   "author": "Jake Rosoman<jkroso@gmail.com>",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/jkroso/dir-each.git"
-  }
+  "repository": "git://github.com/jkroso/dir-each.git"
 }
